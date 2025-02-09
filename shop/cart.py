@@ -16,16 +16,16 @@ class Cart:
             self.cart[product_id]['quantity'] += quantity
         else:
             self.cart[product_id] = {
-                'id': product.id,  # ✅ Poprawne przechowywanie ID produktu
+                'id': product.id,  # Poprawne przechowywanie ID produktu
                 'name': product.name,
-                'price': float(product.price),  # ✅ Konwersja Decimal na float
+                'price': float(product.price),  # Konwersja Decimal na float
                 'quantity': quantity
             }
         self.save()
 
     def remove(self, product_id):
         """ Usuwa produkt z koszyka całkowicie """
-        product_id = str(product_id)  # ✅ Konwersja ID na string (dla sesji)
+        product_id = str(product_id)  # Konwersja ID na string (dla sesji)
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
