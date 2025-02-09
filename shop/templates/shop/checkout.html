@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizacja zamówienia</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>✅ Finalizacja zamówienia</h1>
+
+    {% if cart %}
+        <ul>
+            {% for item in cart %}
+                <li>{{ item.name }} - {{ item.price }} zł (x{{ item.quantity }})</li>
+            {% endfor %}
+        </ul>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Potwierdź zamówienie</button>
+        </form>
+    {% else %}
+        <p>Twój koszyk jest pusty.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'cart_view' %}">← Powrót do koszyka</a>
+</body>
+</html>

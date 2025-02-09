@@ -1,0 +1,54 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Lista Produktów{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4 text-center">🛒 Lista produktów</h1>
+
+    <!-- 🔍 Formularz wyszukiwania i filtrowania -->
+    <form method="GET" action="{% url 'product_list' %}" class="row g-2 mb-4">
+        <div class="col-md-6">
+            <input type="text" name="q" class="form-control" placeholder="🔍 Szukaj produktu..." value="{{ query }}">
+        </div>
+        <div class="col-md-4">
+            <select name="category" class="form-select" onchange="this.form.submit()">
+                <option value="">🏷️ Wszystkie kategorie</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">🔍 Szukaj</button>
+        </div>
+    </form>
+
+    <!-- 📦 Lista produktów w Bootstrap Grid -->
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text"><strong>{{ product.price }} zł</strong></p>
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-primary btn-sm">📄 Szczegóły</a>
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-warning btn-sm">🛒 Dodaj do koszyka</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center text-muted">Brak dostępnych produktów spełniających kryteria.</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'cart_view' %}" class="btn btn-success">🛒 Przejdź do koszyka</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">← Powrót do strony głównej</a>
+    </div>
+</div>
+{% endblock %}

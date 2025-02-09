@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Potwierdzenie zamówienia</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Zamówienie potwierdzone!</h1>
+    <p>Dziękujemy za zakupy! Twoje zamówienie numer <strong>#{{ order.id }}</strong> zostało zapisane.</p>
+
+    <h2>Szczegóły zamówienia:</h2>
+    <ul>
+        {% for item in order.items.all %}
+            <li>{{ item.quantity }}x {{ item.product_name }} - {{ item.price }} zł</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Łączna kwota: {{ order.total_price }} zł</strong></p>
+
+    <br>
+    <a href="{% url 'home' %}">🏠 Powrót na stronę główną</a>
+</body>
+</html>

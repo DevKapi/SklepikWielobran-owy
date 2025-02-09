@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zamówienia 2024-2025</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Zamówienia z lat 2024 i 2025</h1>
+
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>Zamówienie #{{ order.id }} - Data: {{ order.created_at }} - Status: {{ order.status }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Brak zamówień z lat 2024 i 2025.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}">Powrót do strony głównej</a>
+</body>
+</html>

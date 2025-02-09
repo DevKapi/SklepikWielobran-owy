@@ -1,0 +1,37 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Strona Główna{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <h1 class="display-4">🛍 Sklepik internetowy wielobranżowy</h1>
+    <p class="lead">Wybierz jedną z opcji:</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg w-100 mb-3">📦 Lista produktów</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'order_summary' %}" class="btn btn-success btn-lg w-100 mb-3">📜 Zamówienia 2024-2025</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/admin/" class="btn btn-warning btn-lg w-100 mb-3">⚙️ Panel administracyjny</a>
+        </div>
+    </div>
+
+    <hr>
+
+    {% if user.is_authenticated %}
+        <p class="mt-3">Witaj, <strong>{{ user.username }}</strong>!</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">🚪 Wyloguj</button>
+        </form>
+    {% else %}
+        <p class="mt-3">
+            <a href="{% url 'login' %}" class="btn btn-outline-primary">🔑 Zaloguj</a>
+            <a href="{% url 'register' %}" class="btn btn-outline-secondary">📝 Zarejestruj</a>
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

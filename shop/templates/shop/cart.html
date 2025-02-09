@@ -1,0 +1,48 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Koszyk{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4 text-center">🛒 Twój koszyk</h1>
+
+    {% if cart %}
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena</th>
+                    <th>Ilość</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td><strong>{{ item.price }} zł</strong></td>
+                        <td>{{ item.quantity }}</td>
+                        <td>
+                            <a href="{% url 'decrease_from_cart' item.id %}" class="btn btn-warning btn-sm">➖ Zmniejsz</a>
+                            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">❌ Usuń</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'clear_cart' %}" class="btn btn-outline-danger">🗑 Wyczyść koszyk</a>
+            <a href="{% url 'checkout' %}" class="btn btn-success">✅ Przejdź do zamówienia</a>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            🛒 Twój koszyk jest pusty.
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'product_list' %}" class="btn btn-secondary">← Powrót do sklepu</a>
+    </div>
+</div>
+{% endblock %}
